@@ -1,14 +1,16 @@
-import './App.css'
+import "./App.css";
+import Header from "./components/Header";
+import SearchBar from "./components/SearchBar";
+import WeatherCard from "./components/WeatherCard";
 
 function App() {
   return (
     <div>
-      <h1>Weather Forecast App</h1>
-      <p>Welcome to my first Full Stack Project 🚀</p>
+      <Header />
+      <SearchBar />
+      <WeatherCard />
     </div>
   );
 }
 
 export default App;
-
-
