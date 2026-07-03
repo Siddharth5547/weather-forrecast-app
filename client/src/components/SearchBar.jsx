@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-function SearchBar() {
+function SearchBar({ onSearch }) {
   const [city, setCity] = useState("");
 
   function handleSearch() {
-  console.log(city);
+  onSearch(city);
 }
 
   return (

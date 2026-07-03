@@ -16,7 +16,7 @@ function App() {
   return (
     <div>
       <Header />
-      <SearchBar />
+      <SearchBar onSearch={handleSearch} />
           <WeatherCard
           city={weather.city}
           temperature={weather.temperature}
@@ -27,5 +27,14 @@ function App() {
     </div>
   );
 }
+    function handleSearch(city) {
+      setWeather({
+        city: city,
+        temperature: 30,
+        condition: "Sunny",
+        humidity: 60,
+        wind: 15,
+      });
+    }
 
 export default App;
