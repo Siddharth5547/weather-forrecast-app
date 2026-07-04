@@ -1,10 +1,10 @@
 const express = require("express");
-
+ require("dotenv").config(); 
 const weatherRoutes = require("./routes/weatherRoutes");
 
 const app = express();
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use("/api/weather", weatherRoutes);
 
