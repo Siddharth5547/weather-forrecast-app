@@ -1,6 +1,8 @@
 const getWeather = (req, res) => {
+  const city = req.query.city;
+
   res.json({
-    city: "Delhi",
+    city: city,
     temperature: 32,
     condition: "Sunny",
     humidity: 60,
@@ -8,6 +10,4 @@ const getWeather = (req, res) => {
   });
 };
 
-module.exports = {
-  getWeather,
-};
+module.exports = { getWeather };
