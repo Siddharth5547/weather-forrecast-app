@@ -29,13 +29,14 @@ const getWeather = async (req, res) => {
       wind: Math.round(data.wind.speed),
     });
   } catch (error) {
-    console.log("FULL ERROR:");
-    console.log(error.response?.data || error.message);
+  console.log("========== ERROR ==========");
+  console.log(error.response?.data || error.message);
+  console.log("===========================");
 
-    res.status(500).json({
-      message: error.response?.data || error.message,
-    });
-  }
+  res.status(500).json({
+    message: error.response?.data?.message || error.message,
+  });
+}
 };
 
 module.exports = {
