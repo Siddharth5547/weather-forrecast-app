@@ -1,32 +1,51 @@
-function WeatherCard(props) {
-  return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 shadow-2xl text-white">
+function WeatherCard({
+  city,
+  temperature,
+  condition,
+  humidity,
+  wind,
+}) {
 
-      <h2 className="text-3xl font-bold text-center mb-6">
-        📍 {props.city || "Search a City"}
+  let icon = "☀️";
+
+  if (condition === "Clouds") icon = "☁️";
+  if (condition === "Rain") icon = "🌧️";
+  if (condition === "Snow") icon = "❄️";
+  if (condition === "Thunderstorm") icon = "⛈️";
+  if (condition === "Mist") icon = "🌫️";
+
+  return (
+    <div className="mt-8 bg-white/10 backdrop-blur-md rounded-3xl p-8 text-white shadow-2xl border border-white/20">
+
+      <h2 className="text-4xl text-center mb-5">
+        {icon}
       </h2>
 
-      <div className="space-y-4 text-lg">
+      <h2 className="text-3xl font-bold text-center">
+        📍 {city}
+      </h2>
 
-        <p>
-          🌡️ <span className="font-semibold">Temperature :</span>{" "}
-          {props.temperature}°C
-        </p>
+      <div className="mt-8 space-y-4 text-xl">
 
-        <p>
-          ☁️ <span className="font-semibold">Condition :</span>{" "}
-          {props.condition}
-        </p>
+        <div className="flex justify-between">
+          <span>🌡 Temperature</span>
+          <span>{temperature}°C</span>
+        </div>
 
-        <p>
-          💧 <span className="font-semibold">Humidity :</span>{" "}
-          {props.humidity}%
-        </p>
+        <div className="flex justify-between">
+          <span>☁ Condition</span>
+          <span>{condition}</span>
+        </div>
 
-        <p>
-          💨 <span className="font-semibold">Wind :</span>{" "}
-          {props.wind} km/h
-        </p>
+        <div className="flex justify-between">
+          <span>💧 Humidity</span>
+          <span>{humidity}%</span>
+        </div>
+
+        <div className="flex justify-between">
+          <span>💨 Wind</span>
+          <span>{wind} km/h</span>
+        </div>
 
       </div>
 
