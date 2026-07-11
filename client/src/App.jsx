@@ -8,7 +8,7 @@ import WeatherCard from "./components/WeatherCard";
 import {
   fetchWeather,
   fetchWeatherByLocation,
-} from "./services/WeatherService";
+} from "./Services/WeatherService";
 
 function getBackground(condition) {
   switch (condition) {
