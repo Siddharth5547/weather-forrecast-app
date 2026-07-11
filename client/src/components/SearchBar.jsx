@@ -1,30 +1,163 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-function SearchBar({ onSearch }) {
+function SearchBar({
+  onSearch,
+  onLocationSearch,
+  theme,
+}) {
   const [city, setCity] = useState("");
+  const [listening, setListening] = useState(false);
+
+  const recognitionRef = useRef(null);
 
   function handleSearch() {
     if (city.trim() !== "") {
-      onSearch(city);
+      onSearch(city.trim());
     }
   }
 
-  return (
-    <div className="flex gap-3 mb-8">
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  }
 
-      <input
-        type="text"
-        placeholder="🔍 Search city..."
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        className="flex-1 px-5 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-blue-400"
-      />
+  function handleLocation() {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        onLocationSearch(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+      },
+      () => {
+        alert("Location permission denied.");
+      }
+    );
+  }
+
+  function startVoiceSearch() {
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    alert("Voice Search is not supported in this browser.");
+    return;
+  }
+
+  // Agar pehle se recognition chal raha hai to usse stop karo
+  if (recognitionRef.current) {
+    recognitionRef.current.stop();
+    recognitionRef.current = null;
+  }
+
+  const recognition = new SpeechRecognition();
+
+  recognition.lang = "en-IN";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognitionRef.current = recognition;
+
+  recognition.onstart = () => {
+    setListening(true);
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+
+    setCity(transcript);
+    onSearch(transcript);
+  };
+
+  recognition.onerror = (event) => {
+    console.log("Voice Error:", event.error);
+
+    if (event.error === "not-allowed") {
+      alert("Please allow microphone permission.");
+    } else if (event.error === "no-speech") {
+      alert("No speech detected. Please try again.");
+    }
+
+    setListening(false);
+    recognitionRef.current = null;
+  };
+
+  recognition.onend = () => {
+    setListening(false);
+    recognitionRef.current = null;
+  };
+
+  recognition.start();
+}
+
+  return (
+    <div className="space-y-3">
+
+      <div className="flex gap-3">
+
+        <input
+          type="text"
+          placeholder="🔍 Search city..."
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className={`flex-1 rounded-2xl px-5 py-3 outline-none border backdrop-blur-lg transition-all duration-300
+          ${
+            theme === "dark"
+              ? "bg-white/10 border-white/20 text-white placeholder:text-gray-300"
+              : "bg-white border-slate-300 text-slate-900 placeholder:text-slate-500 shadow-md"
+          }`}
+        />
+
+        <button
+          onClick={handleSearch}
+          className="rounded-2xl bg-cyan-500 px-6 text-white font-semibold hover:bg-cyan-600 transition"
+        >
+          Search
+        </button>
+
+        <button
+          onClick={startVoiceSearch}
+          disabled={listening}
+          className={`rounded-2xl px-4 text-xl border transition-all duration-300
+          ${
+            listening
+              ? "bg-red-500 text-white animate-pulse cursor-not-allowed"
+              : theme === "dark"
+              ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
+              : "bg-white border-slate-300 text-slate-900 hover:bg-slate-100 shadow-md"
+          }`}
+          title="Voice Search"
+        >
+          {listening ? "🎙️" : "🎤"}
+        </button>
+
+      </div>
+
+      {listening && (
+        <div className="text-center text-red-500 font-semibold animate-pulse">
+          🎙 Listening...
+        </div>
+      )}
 
       <button
-        onClick={handleSearch}
-        className="bg-blue-500 hover:bg-blue-600 text-white px-6 rounded-xl font-semibold transition duration-300"
+        onClick={handleLocation}
+        className={`w-full rounded-2xl py-3 font-semibold border transition-all duration-300
+        ${
+          theme === "dark"
+            ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
+            : "bg-white border-slate-300 text-slate-900 hover:bg-slate-100 shadow-md"
+        }`}
       >
-        Search
+        📍 Use My Current Location
       </button>
 
     </div>
