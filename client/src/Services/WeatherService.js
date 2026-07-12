@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const API_URL =
-  "https://weatherverse-backend-l0pchj2dz-weather-now.vercel.app/api/weather";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Search by City
 export const fetchWeather = async (city) => {
@@ -11,9 +10,6 @@ export const fetchWeather = async (city) => {
 
 // Search by GPS Location
 export const fetchWeatherByLocation = async (lat, lon) => {
-  const response = await axios.get(
-    `${API_URL}?lat=${lat}&lon=${lon}`
-  );
-
+  const response = await axios.get(`${API_URL}?lat=${lat}&lon=${lon}`);
   return response.data;
 };

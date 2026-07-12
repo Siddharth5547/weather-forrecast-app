@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 
 const weatherRoutes = require("./Routes/WeatherRoutes");
 
@@ -8,10 +9,9 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://weather-verse-b79bu3624-weather-now.vercel.app",
       "http://localhost:5173",
+      "https://weather-verse-b79bu3624-weather-now.vercel.app",
     ],
-    methods: ["GET"],
   })
 );
 
