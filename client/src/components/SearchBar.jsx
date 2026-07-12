@@ -10,11 +10,29 @@ function SearchBar({
 
   const recognitionRef = useRef(null);
 
-  function handleSearch() {
-    if (city.trim() !== "") {
-      onSearch(city.trim());
-    }
+  async function handleSearch(city) {
+  try {
+    setLoading(true);
+    setError("");
+
+    console.log("Searching:", city);
+
+    const data = await fetchWeather(city);
+
+    console.log("Success:", data);
+
+    setWeather(data);
+  } catch (err) {
+    console.log("ERROR:", err);
+    console.log("RESPONSE:", err.response);
+    console.log("DATA:", err.response?.data);
+
+    setWeather(null);
+    setError(err.response?.data?.message || err.message);
+  } finally {
+    setLoading(false);
   }
+}
 
   function handleKeyDown(e) {
     if (e.key === "Enter") {
@@ -71,10 +89,15 @@ function SearchBar({
   };
 
   recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
+  const transcript = event.results[0][0].transcript.trim();
 
-    setCity(transcript);
+  console.log("Voice:", transcript);
+
+  setCity(transcript);
+
+  setTimeout(() => {
     onSearch(transcript);
+  }, 100);
   };
 
   recognition.onerror = (event) => {
