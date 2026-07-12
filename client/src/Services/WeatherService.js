@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/weather";
+const API_URL =
+  "https://weatherverse-backend-l0pchj2dz-weather-now.vercel.app/api/weather";
 
 // Search by City
 export const fetchWeather = async (city) => {
