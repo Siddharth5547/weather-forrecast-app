@@ -129,32 +129,38 @@ function SearchBar({
         </button>
 
         <button
-          onClick={startVoiceSearch}
-          disabled={listening}
-          title="Voice Search"
-          className="w-full sm:w-[60px] h-[52px] rounded-2xl flex items-center justify-center border transition-all duration-300 ..."
-          ${
-            listening
-              ? "bg-red-500 text-white animate-pulse cursor-not-allowed"
-              : theme === "dark"
-              ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
-              : "bg-white border-slate-300 text-slate-900 hover:bg-slate-100 shadow-md"
-          }`}
-        >
-          {listening ? "🎙️" : "🎤"}
-        </button>
+  onClick={startVoiceSearch}
+  disabled={listening}
+  title="Voice Search"
+  className={`w-full sm:w-[60px] h-[52px] rounded-2xl flex items-center justify-center border transition-all duration-300
+  ${
+    listening
+      ? "bg-red-500 text-white animate-pulse cursor-not-allowed"
+      : theme === "dark"
+      ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
+      : "bg-white border-slate-300 text-slate-900 hover:bg-slate-100 shadow-md"
+  }`}
+>
+  {listening ? "🎙️" : "🎤"}
+</button>
 
       </div>
 
       {listening && (
-        <div className="text-center text-red-500 font-semibold animate-pulse">
-          🎙 Listening...
-        </div>
-      )}
+  <div
+    className={`text-center rounded-xl py-2 px-4 text-sm sm:text-base font-semibold animate-pulse ${
+      theme === "dark"
+        ? "bg-red-500/20 text-red-300"
+        : "bg-red-100 text-red-600"
+    }`}
+  >
+    🎙 Listening...
+  </div>
+)}
 
       <button
         onClick={handleLocation}
-        className={`w-full rounded-2xl py-3 font-semibold border transition-all duration-300
+        className={`w-full rounded-2xl py-3 sm:py-4 text-sm sm:text-base font-semibold border transition-all duration-300
         ${
           theme === "dark"
             ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
