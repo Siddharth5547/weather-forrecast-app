@@ -90,24 +90,24 @@ function WeatherCard({
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.6 }}
-      className={`relative mt-6 max-w-md mx-auto overflow-hidden rounded-[32px]
+      className={`relative mt-6 w-full max-w-md mx-auto overflow-hidden rounded-[24px] sm:rounded-[32px]
       backdrop-blur-2xl border shadow-[0_15px_40px_rgba(0,0,0,.35)]
       transition-all duration-500 ${cardClass}`}
     >
       <WeatherEffects condition={condition} />
 
-      <div className="relative z-10 p-5 sm:p-7 text-center">
+      <div className="relative z-10 p-4 sm:p-7 text-center">
 
         <motion.img
           src={icon}
           alt=""
-          className="w-20 h-20 sm:w-28 sm:h-28 mx-auto drop-shadow-2xl"
+          className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto drop-shadow-2xl"
           animate={{ y: [0, -8, 0] }}
           transition={{ repeat: Infinity, duration: 3 }}
         />
 
         <motion.h2
-          className="text-2xl sm:text-3xl font-bold mt-1 break-words"
+          className="text-xl sm:text-2xl lg:text-3xl font-bold mt-1 break-words"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
@@ -125,7 +125,7 @@ function WeatherCard({
         </p>
 
         <motion.h1
-          className="text-5xl sm:text-7xl font-black mt-4"
+          className="text-5xl md:text-6xl lg:text-7xl font-black mt-4"
           animate={{ scale: [1, 1.03, 1] }}
           transition={{ repeat: Infinity, duration: 2 }}
         >
@@ -138,7 +138,7 @@ function WeatherCard({
 
       </div>
 
-      <div className="relative z-10 grid grid-cols-2 gap-3 sm:gap-4 px-4 sm:px-5">
+      <div className="relative z-10 grid grid-cols-2 gap-2 sm:gap-4 px-4 sm:px-5">
 
         {[
           ["💧 Humidity", humidity + "%"],
@@ -150,7 +150,7 @@ function WeatherCard({
           <motion.div
             key={index}
             whileHover={{ scale: 1.05 }}
-            className={`${boxClass} rounded-2xl p-3 sm:p-4`}
+            className={`${boxClass} rounded-xl sm:rounded-2xl p-3 sm:p-4`}
           >
 
             <p className={`${secondaryText} text-sm sm:text-base`}>
@@ -167,7 +167,7 @@ function WeatherCard({
 
       </div>
 
-       <div className="relative z-10 flex gap-3 sm:gap-4 px-4 sm:px-5 py-5 sm:py-6">
+       <div className="relative z-10 flex flex-col sm:flex-row gap-3 sm:gap-4 px-4 sm:px-5 py-5 sm:py-6">
 
         <motion.div
           whileHover={{ y: -4 }}
@@ -223,7 +223,7 @@ function WeatherCard({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.08 }}
                 whileHover={{ y: -8, scale: 1.06 }}
-                className={`min-w-[80px] sm:min-w-[90px] rounded-2xl border backdrop-blur-lg p-2 sm:p-3 text-center ${
+                className={`min-w-[85px] sm:min-w-[90px] rounded-2xl border backdrop-blur-lg p-2 sm:p-3 text-center ${
                   theme === "dark"
                     ? "bg-white/10 border-white/10"
                     : "bg-slate-100 border-gray-200"
@@ -280,7 +280,7 @@ function WeatherCard({
                   scale: 1.03,
                   x: 5,
                 }}
-                className={`flex items-center justify-between rounded-2xl px-3 sm:px-4 py-3 backdrop-blur-lg border transition-all duration-300
+                className={`flex items-center justify-between gap-3 rounded-2xl px-3 sm:px-4 py-3 backdrop-blur-lg border transition-all duration-300
                 ${
                   theme === "dark"
                     ? "bg-white/10 border-white/10"

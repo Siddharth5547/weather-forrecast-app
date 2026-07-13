@@ -96,7 +96,7 @@ function App() {
           : "bg-gradient-to-br from-cyan-100 via-sky-100 to-blue-200"
       }`}
     >
-      <div className="w-full max-w-xl px-2 sm:px-0">
+      <div className="w-full max-w-xl mx-auto px-3 sm:px-0">
 
         <Header
           theme={theme}

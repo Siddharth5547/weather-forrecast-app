@@ -11,6 +11,7 @@ const getWeather = async (req, res) => {
     }
 
     const apiKey = process.env.WEATHER_API_KEY;
+  
 
     let url;
 
