@@ -89,25 +89,27 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen transition-all duration-700 flex justify-center items-center px-5 py-8
+      className={`min-h-screen w-full overflow-x-hidden transition-all duration-700
+      flex items-start sm:items-center justify-center
+      px-3 sm:px-5 lg:px-8
+      py-6 sm:py-10
       ${
         theme === "dark"
           ? `bg-gradient-to-br ${getBackground(weather?.condition)}`
           : "bg-gradient-to-br from-cyan-100 via-sky-100 to-blue-200"
       }`}
     >
-      <div className="w-full max-w-xl mx-auto px-3 sm:px-0">
+      <div className="w-full max-w-md sm:max-w-xl lg:max-w-2xl mx-auto">
 
         <Header
           theme={theme}
-          darkMode={theme === "dark"}
           toggleTheme={toggleTheme}
         />
 
         <SearchBar
-        onSearch={handleSearch}
-        onLocationSearch={handleLocationSearch}
-        theme={theme}
+          onSearch={handleSearch}
+          onLocationSearch={handleLocationSearch}
+          theme={theme}
         />
 
         {loading && (
@@ -115,7 +117,7 @@ function App() {
             <div className="loader mx-auto"></div>
 
             <p
-              className={`mt-4 ${
+              className={`mt-4 text-sm sm:text-base ${
                 theme === "dark"
                   ? "text-gray-300"
                   : "text-slate-700"
@@ -128,7 +130,7 @@ function App() {
 
         {error && (
           <div className="bg-red-500/20 border border-red-400 rounded-xl mt-6 p-4">
-            <p className="text-red-300 text-center">
+            <p className="text-red-300 text-center text-sm sm:text-base">
               {error}
             </p>
           </div>

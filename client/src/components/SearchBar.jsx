@@ -105,7 +105,7 @@ function SearchBar({
   return (
     <div className="space-y-4">
 
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-3 items-center">
 
         <input
           type="text"
@@ -123,7 +123,7 @@ function SearchBar({
 
         <button
           onClick={handleSearch}
-          className="w-full sm:w-auto rounded-2xl bg-cyan-500 px-6 py-3 text-white font-semibold hover:bg-cyan-600 transition"
+          className="w-full sm:w-auto min-w-[120px] rounded-2xl bg-cyan-500 px-6 py-3 font-semibold text-white hover:bg-cyan-600 transition-all"
         >
           Search
         </button>
@@ -132,7 +132,7 @@ function SearchBar({
           onClick={startVoiceSearch}
           disabled={listening}
           title="Voice Search"
-          className={`w-full sm:w-auto rounded-2xl px-4 py-3 text-xl border transition-all duration-300
+          className="w-full sm:w-[60px] h-[52px] rounded-2xl flex items-center justify-center border transition-all duration-300 ..."
           ${
             listening
               ? "bg-red-500 text-white animate-pulse cursor-not-allowed"
