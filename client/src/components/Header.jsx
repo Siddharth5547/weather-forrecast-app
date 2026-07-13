@@ -69,11 +69,9 @@ function Header({ theme, toggleTheme }) {
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className={`text-4xl sm:text-6xl font-black mt-4 sm:mt-5 leading-tight ${
-          theme === "dark"
-            ? "text-white"
-            : "text-slate-900"
-        }`}
+        className={`text-4xl sm:text-5xl lg:text-6xl font-black mt-5 leading-tight break-words ${
+           theme === "dark" ? "text-white" : "text-slate-900"
+          }`}
       >
         Weather
         <span className="text-cyan-500">Now</span>
