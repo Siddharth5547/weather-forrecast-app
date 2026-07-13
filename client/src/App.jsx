@@ -138,7 +138,7 @@ function App() {
         </div>
       )}
 
-      {!loading && weather && (
+                  {!loading && weather && (
         <WeatherCard
           {...weather}
           theme={theme}
@@ -147,5 +147,7 @@ function App() {
 
     </div>
   </div>
-);
+  );
+}
+
 export default App;
