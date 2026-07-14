@@ -8,8 +8,6 @@ export const fetchWeather = async (city) => {
 };
 
 export const fetchWeatherByLocation = async (lat, lon) => {
-  const response = await axios.get(
-    `${API_URL}?lat=${lat}&lon=${lon}`
-  );
+  const response = await axios.get(`${API_URL}?lat=${lat}&lon=${lon}`);
   return response.data;
 };
