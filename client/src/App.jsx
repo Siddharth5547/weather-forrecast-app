@@ -43,9 +43,9 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "dark"
-  );
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -61,8 +61,9 @@ function App() {
       setError("");
 
       const data = await fetchWeather(city);
+
       setWeather(data);
-    } catch {
+    } catch (err) {
       setWeather(null);
       setError("❌ City not found");
     } finally {
@@ -76,8 +77,9 @@ function App() {
       setError("");
 
       const data = await fetchWeatherByLocation(lat, lon);
+
       setWeather(data);
-    } catch {
+    } catch (err) {
       setWeather(null);
       setError("❌ Unable to fetch location weather");
     } finally {
@@ -87,26 +89,25 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen w-full overflow-x-hidden transition-all duration-700
-      flex items-start sm:items-center justify-center
-      px-3 sm:px-5 lg:px-8
-      py-6 sm:py-10
+      className={`min-h-screen transition-all duration-700 flex justify-center items-center px-5 py-8
       ${
         theme === "dark"
           ? `bg-gradient-to-br ${getBackground(weather?.condition)}`
           : "bg-gradient-to-br from-cyan-100 via-sky-100 to-blue-200"
       }`}
     >
-      <div className="w-full max-w-md sm:max-w-xl lg:max-w-2xl mx-auto">
+      <div className="w-full max-w-xl">
+
         <Header
           theme={theme}
+          darkMode={theme === "dark"}
           toggleTheme={toggleTheme}
         />
 
         <SearchBar
-          onSearch={handleSearch}
-          onLocationSearch={handleLocationSearch}
-          theme={theme}
+        onSearch={handleSearch}
+        onLocationSearch={handleLocationSearch}
+        theme={theme}
         />
 
         {loading && (
@@ -114,7 +115,7 @@ function App() {
             <div className="loader mx-auto"></div>
 
             <p
-              className={`mt-4 text-sm sm:text-base ${
+              className={`mt-4 ${
                 theme === "dark"
                   ? "text-gray-300"
                   : "text-slate-700"
@@ -127,7 +128,7 @@ function App() {
 
         {error && (
           <div className="bg-red-500/20 border border-red-400 rounded-xl mt-6 p-4">
-            <p className="text-red-300 text-center text-sm sm:text-base">
+            <p className="text-red-300 text-center">
               {error}
             </p>
           </div>
@@ -139,6 +140,7 @@ function App() {
             theme={theme}
           />
         )}
+
       </div>
     </div>
   );
