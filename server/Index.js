@@ -10,7 +10,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "weather-verse-m50kg5rlh-weather-now.vercel.app",
+      "https://weather-verse-b79bu3624-weather-now.vercel.app",
     ],
   })
 );
