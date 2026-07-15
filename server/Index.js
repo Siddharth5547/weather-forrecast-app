@@ -10,9 +10,9 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://weather-verse-4gs6e7nqk-weather-now.vercel.app",
+      
       "https://weather-verse-two.vercel.app",
-      "https://weather-verse-git-main-weather-now.vercel.app",
+      
     ],
     methods: ["GET", "POST"],
     credentials: true,
