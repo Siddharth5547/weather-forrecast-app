@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { getWeatherAdvice } = require("../Controllers/AIController");
+const { getWeatherAdvice } = require("../controllers/AIController");
 
 router.post("/weather-advice", getWeatherAdvice);
 
