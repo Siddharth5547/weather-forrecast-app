@@ -156,10 +156,7 @@ export default function WeatherEffects({ condition = "" }) {
     return <Rain />;
   }
 
-  if (
-    text.includes("cloud") ||
-    text.includes("overcast")
-  ) {
+  if (text.includes("cloud") || text.includes("overcast")) {
     return <Clouds />;
   }
 
@@ -171,17 +168,11 @@ export default function WeatherEffects({ condition = "" }) {
     return <Snow />;
   }
 
-  if (
-    text.includes("thunder") ||
-    text.includes("storm")
-  ) {
+  if (text.includes("thunder") || text.includes("storm")) {
     return <Thunder />;
   }
 
-  if (
-    text.includes("clear") ||
-    text.includes("sunny")
-  ) {
+  if (text.includes("clear") || text.includes("sunny")) {
     return <Sun />;
   }
 

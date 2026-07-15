@@ -1,10 +1,4 @@
-import {
-  LineChart,
-  Line,
-  XAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 function TemperatureChart({ hourly = [], theme }) {
   const data = hourly.map((item) => ({

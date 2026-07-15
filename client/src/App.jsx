@@ -6,6 +6,8 @@ import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
 import AIAssistant from "./components/AIAssistant";
 import { getAIAdvice } from "./Services/AIService";
+import AQICard from "./components/AQICard";
+
 
 import {
   fetchWeather,
@@ -60,19 +62,19 @@ function App() {
   }
 
   async function generateAI(weatherData) {
-  try {
-    setAILoading(true);
+    try {
+      setAILoading(true);
 
-    const advice = await getAIAdvice(weatherData);
+      const advice = await getAIAdvice(weatherData);
 
-    setAIAdvice(advice);
-  } catch (err) {
-    console.log(err);
-    setAIAdvice("Unable to generate AI advice.");
-  } finally {
-    setAILoading(false);
+      setAIAdvice(advice);
+    } catch (err) {
+      console.log(err);
+      setAIAdvice("Unable to generate AI advice.");
+    } finally {
+      setAILoading(false);
+    }
   }
-}
 
   async function handleSearch(city) {
     try {
@@ -118,7 +120,6 @@ function App() {
       }`}
     >
       <div className="w-full max-w-xl">
-
         <Header
           theme={theme}
           darkMode={theme === "dark"}
@@ -126,9 +127,9 @@ function App() {
         />
 
         <SearchBar
-        onSearch={handleSearch}
-        onLocationSearch={handleLocationSearch}
-        theme={theme}
+          onSearch={handleSearch}
+          onLocationSearch={handleLocationSearch}
+          theme={theme}
         />
 
         {loading && (
@@ -137,9 +138,7 @@ function App() {
 
             <p
               className={`mt-4 ${
-                theme === "dark"
-                  ? "text-gray-300"
-                  : "text-slate-700"
+                theme === "dark" ? "text-gray-300" : "text-slate-700"
               }`}
             >
               Fetching Weather...
@@ -149,28 +148,22 @@ function App() {
 
         {error && (
           <div className="bg-red-500/20 border border-red-400 rounded-xl mt-6 p-4">
-            <p className="text-red-300 text-center">
-              {error}
-            </p>
+            <p className="text-red-300 text-center">{error}</p>
           </div>
         )}
 
         {!loading && weather && (
-  <>
-    <WeatherCard
-      {...weather}
-      theme={theme}
-    />
+          <>
+            <WeatherCard {...weather} theme={theme} />
 
-    <AIAssistant
-      advice={aiAdvice}
-      loading={aiLoading}
-      theme={theme}
-      onRegenerate={() => generateAI(weather)}
-    />
-  </>
-)}
-
+            <AIAssistant
+              advice={aiAdvice}
+              loading={aiLoading}
+              theme={theme}
+              onRegenerate={() => generateAI(weather)}
+            />
+          </>
+        )}
       </div>
     </div>
   );

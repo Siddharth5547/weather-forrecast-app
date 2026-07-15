@@ -1,15 +1,10 @@
 import { useState, useRef } from "react";
 
-function SearchBar({
-  onSearch,
-  onLocationSearch,
-  theme,
-}) {
+function SearchBar({ onSearch, onLocationSearch, theme }) {
   const [city, setCity] = useState("");
   const [listening, setListening] = useState(false);
 
   const recognitionRef = useRef(null);
-
 
   function handleKeyDown(e) {
     if (e.key === "Enter" && city.trim()) {
@@ -17,13 +12,11 @@ function SearchBar({
     }
   }
 
-
   function handleSearchClick() {
     if (city.trim()) {
       onSearch(city);
     }
   }
-
 
   function handleLocation() {
     if (!navigator.geolocation) {
@@ -33,10 +26,7 @@ function SearchBar({
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        onLocationSearch(
-          position.coords.latitude,
-          position.coords.longitude
-        );
+        onLocationSearch(position.coords.latitude, position.coords.longitude);
       },
       () => {
         alert("Location permission denied.");
@@ -44,23 +34,19 @@ function SearchBar({
     );
   }
 
-
   function startVoiceSearch() {
     const SpeechRecognition =
-      window.SpeechRecognition ||
-      window.webkitSpeechRecognition;
+      window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       alert("Voice Search is not supported in this browser.");
       return;
     }
 
-
     if (recognitionRef.current) {
       recognitionRef.current.stop();
       recognitionRef.current = null;
     }
-
 
     const recognition = new SpeechRecognition();
 
@@ -69,18 +55,14 @@ function SearchBar({
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
-
     recognitionRef.current = recognition;
-
 
     recognition.onstart = () => {
       setListening(true);
     };
 
-
     recognition.onresult = (event) => {
-      const transcript =
-        event.results[0][0].transcript.trim();
+      const transcript = event.results[0][0].transcript.trim();
 
       console.log("Voice:", transcript);
 
@@ -91,14 +73,12 @@ function SearchBar({
       }, 100);
     };
 
-
     recognition.onerror = (event) => {
       console.log("Voice Error:", event.error);
 
       if (event.error === "not-allowed") {
         alert("Please allow microphone permission.");
-      } 
-      else if (event.error === "no-speech") {
+      } else if (event.error === "no-speech") {
         alert("No speech detected. Please try again.");
       }
 
@@ -106,23 +86,17 @@ function SearchBar({
       recognitionRef.current = null;
     };
 
-
     recognition.onend = () => {
       setListening(false);
       recognitionRef.current = null;
     };
 
-
     recognition.start();
   }
 
-
-
   return (
     <div className="space-y-3">
-
       <div className="flex gap-3">
-
         <input
           type="text"
           placeholder="🔍 Search city..."
@@ -137,14 +111,12 @@ function SearchBar({
           }`}
         />
 
-
         <button
           onClick={handleSearchClick}
           className="rounded-2xl bg-cyan-500 px-6 text-white font-semibold hover:bg-cyan-600 transition"
         >
           Search
         </button>
-
 
         <button
           onClick={startVoiceSearch}
@@ -161,16 +133,13 @@ function SearchBar({
         >
           {listening ? "🎙️" : "🎤"}
         </button>
-
       </div>
-
 
       {listening && (
         <div className="text-center text-red-500 font-semibold animate-pulse">
           🎙 Listening...
         </div>
       )}
-
 
       <button
         onClick={handleLocation}
@@ -183,7 +152,6 @@ function SearchBar({
       >
         📍 Use My Current Location
       </button>
-
     </div>
   );
 }

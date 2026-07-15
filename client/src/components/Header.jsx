@@ -11,7 +11,6 @@ function Header({ theme, toggleTheme }) {
 
   return (
     <div className="text-center mb-10 relative">
-
       {/* Theme Toggle */}
 
       <button
@@ -23,11 +22,7 @@ function Header({ theme, toggleTheme }) {
             : "bg-white text-slate-800 border border-slate-300"
         }`}
       >
-        {theme === "dark" ? (
-          <Sun size={26} />
-        ) : (
-          <Moon size={26} />
-        )}
+        {theme === "dark" ? <Sun size={26} /> : <Moon size={26} />}
       </button>
 
       {/* Weather Logo */}
@@ -65,9 +60,7 @@ function Header({ theme, toggleTheme }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
         className={`text-6xl font-black mt-5 ${
-          theme === "dark"
-            ? "text-white"
-            : "text-slate-900"
+          theme === "dark" ? "text-white" : "text-slate-900"
         }`}
       >
         Weather
@@ -81,9 +74,7 @@ function Header({ theme, toggleTheme }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.35 }}
         className={`text-2xl mt-2 ${
-          theme === "dark"
-            ? "text-gray-300"
-            : "text-slate-700"
+          theme === "dark" ? "text-gray-300" : "text-slate-700"
         }`}
       >
         Real-Time Weather Forecast
@@ -96,14 +87,11 @@ function Header({ theme, toggleTheme }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
         className={`mt-3 text-lg ${
-          theme === "dark"
-            ? "text-gray-400"
-            : "text-slate-600"
+          theme === "dark" ? "text-gray-400" : "text-slate-600"
         }`}
       >
         {today}
       </motion.p>
-
     </div>
   );
 }
