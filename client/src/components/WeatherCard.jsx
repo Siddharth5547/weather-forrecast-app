@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import WeatherEffects from "./WeatherEffects";
 import TemperatureChart from "./TemperatureChart";
+import AIAssistant from "./AIAssistant";
 
 function WeatherCard({
   city,
@@ -19,15 +20,24 @@ function WeatherCard({
   daily = [],
   theme,
   aqi,
+  aiAdvice,
+  aiLoading,
+  onRegenerate,
 }) {
   const cardClass =
     theme === "dark"
       ? "bg-white/10 border-white/20 text-white"
       : "bg-white/90 border-gray-200 text-slate-900";
 
-  const boxClass = theme === "dark" ? "bg-white/10" : "bg-slate-100";
+  const boxClass =
+    theme === "dark"
+      ? "bg-white/10"
+      : "bg-slate-100";
 
-  const secondaryText = theme === "dark" ? "text-gray-300" : "text-slate-600";
+  const secondaryText =
+    theme === "dark"
+      ? "text-gray-300"
+      : "text-slate-600";
 
   function getAQIStatus(index) {
     if (index === 1) return "Good";
@@ -42,18 +52,30 @@ function WeatherCard({
   function getWeatherEmoji(condition) {
     const text = condition.toLowerCase();
 
-    if (text.includes("thunder") || text.includes("storm")) return "⛈️";
+    if (text.includes("thunder") || text.includes("storm"))
+      return "⛈️";
 
-    if (text.includes("rain")) return "🌧️";
+    if (text.includes("rain"))
+      return "🌧️";
 
-    if (text.includes("snow")) return "❄️";
+    if (text.includes("snow"))
+      return "❄️";
 
-    if (text.includes("mist") || text.includes("fog") || text.includes("haze"))
+    if (
+      text.includes("mist") ||
+      text.includes("fog") ||
+      text.includes("haze")
+    )
       return "🌫️";
 
-    if (text.includes("cloud")) return "☁️";
+    if (text.includes("cloud"))
+      return "☁️";
 
-    if (text.includes("sunny") || text.includes("clear")) return "☀️";
+    if (
+      text.includes("sunny") ||
+      text.includes("clear")
+    )
+      return "☀️";
 
     return "🌤️";
   }
@@ -97,11 +119,15 @@ function WeatherCard({
           }}
         />
 
-        <h2 className="text-3xl font-bold mt-2">📍 {city}</h2>
+        <h2 className="text-3xl font-bold mt-2">
+          📍 {city}
+        </h2>
 
         <p
           className={`mt-2 ${
-            theme === "dark" ? "text-cyan-300" : "text-blue-600"
+            theme === "dark"
+              ? "text-cyan-300"
+              : "text-blue-600"
           }`}
         >
           {description}
@@ -120,10 +146,11 @@ function WeatherCard({
           {temperature}°
         </motion.h1>
 
-        <p className={secondaryText}>Feels Like {feelsLike}°C</p>
+        <p className={secondaryText}>
+          Feels Like {feelsLike}°C
+        </p>
       </div>
-
-      {/* AQI CARD */}
+            {/* AQI CARD */}
 
       {aqi && (
         <div className="relative z-10 px-5 mb-5">
@@ -133,15 +160,23 @@ function WeatherCard({
             }}
             className={`${boxClass} rounded-3xl p-5`}
           >
-            <h3 className="text-xl font-bold mb-4">🌿 Air Quality</h3>
+            <h3 className="text-xl font-bold mb-4">
+              🌿 Air Quality
+            </h3>
 
             <div className="flex items-center gap-4">
-              <div className="text-5xl font-black">{aqi.index}</div>
+              <div className="text-5xl font-black">
+                {aqi.index}
+              </div>
 
               <div>
-                <p className="text-lg font-bold">{getAQIStatus(aqi.index)}</p>
+                <p className="text-lg font-bold">
+                  {getAQIStatus(aqi.index)}
+                </p>
 
-                <p className={`${secondaryText} text-sm`}>US EPA Index</p>
+                <p className={`${secondaryText} text-sm`}>
+                  US EPA Index
+                </p>
               </div>
             </div>
 
@@ -169,6 +204,7 @@ function WeatherCard({
           </motion.div>
         </div>
       )}
+
       {/* WEATHER DETAILS */}
 
       <div className="relative z-10 grid grid-cols-2 gap-4 px-5">
@@ -185,14 +221,18 @@ function WeatherCard({
             }}
             className={`${boxClass} rounded-3xl p-4`}
           >
-            <p className={`${secondaryText} text-sm`}>{title}</p>
+            <p className={`${secondaryText} text-sm`}>
+              {title}
+            </p>
 
-            <h3 className="text-2xl font-bold mt-2">{value}</h3>
+            <h3 className="text-2xl font-bold mt-2">
+              {value}
+            </h3>
           </motion.div>
         ))}
       </div>
 
-      {/* SUNRISE SUNSET */}
+      {/* SUNRISE & SUNSET */}
 
       <div className="relative z-10 flex gap-4 px-5 py-6">
         <motion.div
@@ -203,9 +243,13 @@ function WeatherCard({
         >
           <h2 className="text-3xl">🌅</h2>
 
-          <p className={`${secondaryText} text-sm mt-2`}>Sunrise</p>
+          <p className={`${secondaryText} text-sm mt-2`}>
+            Sunrise
+          </p>
 
-          <h3 className="font-bold mt-1">{sunrise}</h3>
+          <h3 className="font-bold mt-1">
+            {sunrise}
+          </h3>
         </motion.div>
 
         <motion.div
@@ -216,17 +260,22 @@ function WeatherCard({
         >
           <h2 className="text-3xl">🌇</h2>
 
-          <p className={`${secondaryText} text-sm mt-2`}>Sunset</p>
+          <p className={`${secondaryText} text-sm mt-2`}>
+            Sunset
+          </p>
 
-          <h3 className="font-bold mt-1">{sunset}</h3>
+          <h3 className="font-bold mt-1">
+            {sunset}
+          </h3>
         </motion.div>
       </div>
-
-      {/* HOURLY FORECAST */}
+            {/* HOURLY FORECAST */}
 
       {hourly.length > 0 && (
         <div className="relative z-10 px-5 pb-6">
-          <h3 className="text-xl font-bold mb-4">⏰ Today</h3>
+          <h3 className="text-xl font-bold mb-4">
+            ⏰ Today
+          </h3>
 
           <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
             {hourly.map((item, index) => (
@@ -257,11 +306,19 @@ function WeatherCard({
                 }
                 `}
               >
-                <p className={`text-sm ${secondaryText}`}>{item.time}</p>
+                <p className={`text-sm ${secondaryText}`}>
+                  {item.time}
+                </p>
 
-                <img src={item.icon} alt="" className="w-12 h-12 mx-auto" />
+                <img
+                  src={item.icon}
+                  alt=""
+                  className="w-12 h-12 mx-auto"
+                />
 
-                <h3 className="text-xl font-bold">{item.temp}°</h3>
+                <h3 className="text-xl font-bold">
+                  {item.temp}°
+                </h3>
               </motion.div>
             ))}
           </div>
@@ -270,13 +327,18 @@ function WeatherCard({
 
       {/* TEMPERATURE CHART */}
 
-      <TemperatureChart hourly={hourly} theme={theme} />
+      <TemperatureChart
+        hourly={hourly}
+        theme={theme}
+      />
 
       {/* 5 DAY FORECAST */}
 
       {daily.length > 0 && (
         <div className="relative z-10 px-5 pb-6">
-          <h3 className="text-xl font-bold mb-4">📅 5-Day Forecast</h3>
+          <h3 className="text-xl font-bold mb-4">
+            📅 5-Day Forecast
+          </h3>
 
           <div className="space-y-3">
             {daily.map((item, index) => (
@@ -309,9 +371,13 @@ function WeatherCard({
                 `}
               >
                 <div>
-                  <h3 className="font-bold">{item.day}</h3>
+                  <h3 className="font-bold">
+                    {item.day}
+                  </h3>
 
-                  <p className={`text-xs ${secondaryText}`}>
+                  <p
+                    className={`text-xs ${secondaryText}`}
+                  >
                     {item.condition.length > 18
                       ? item.condition.slice(0, 18) + "..."
                       : item.condition}
@@ -322,13 +388,24 @@ function WeatherCard({
                   {getWeatherEmoji(item.condition)}
                 </div>
 
-                <h3 className="text-2xl font-bold">{item.temp}°</h3>
+                <h3 className="text-2xl font-bold">
+                  {item.temp}°
+                </h3>
               </motion.div>
             ))}
           </div>
         </div>
       )}
-     
+            {/* AI WEATHER ASSISTANT */}
+
+      <div className="relative z-10 px-5 pb-7">
+        <AIAssistant
+          advice={aiAdvice}
+          loading={aiLoading}
+          onRegenerate={onRegenerate}
+          theme={theme}
+        />
+      </div>
     </motion.div>
   );
 }

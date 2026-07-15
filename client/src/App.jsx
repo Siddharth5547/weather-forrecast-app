@@ -110,7 +110,7 @@ function App() {
       setError("");
 
       const data = await fetchWeatherByLocation(lat, lon);
-      console.log("WEATHER DATA:", data.aqi);
+    
       setWeather(data);
 
       await generateAI(data);
@@ -170,16 +170,13 @@ function App() {
 
         {!loading && weather && (
           <>
-            <WeatherCard {...weather} theme={theme} />
-
-            <AQICard aqi={weather.aqi} theme={theme} />
-
-            <AIAssistant
-              advice={aiAdvice}
-              loading={aiLoading}
-              theme={theme}
-              onRegenerate={() => generateAI(weather)}
-            />
+            <WeatherCard
+                {...weather}
+                theme={theme}
+                aiAdvice={aiAdvice}
+                aiLoading={aiLoading}
+                onRegenerate={() => generateAI(weather)}
+              />
           </>
         )}
       </div>

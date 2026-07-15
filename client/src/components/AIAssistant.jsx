@@ -1,41 +1,70 @@
 import { motion } from "framer-motion";
-import { Bot, Sparkles, Copy, RefreshCw } from "lucide-react";
+import {
+  Bot,
+  Sparkles,
+  Copy,
+  RefreshCw,
+  CheckCircle2,
+} from "lucide-react";
+import { useState } from "react";
 
-function AIAssistant({ advice, loading, onRegenerate, theme }) {
+function AIAssistant({
+  advice,
+  loading,
+  onRegenerate,
+  theme,
+}) {
+  const [copied, setCopied] = useState(false);
+
   async function copyAdvice() {
     if (!advice) return;
 
     await navigator.clipboard.writeText(advice);
-    alert("AI advice copied!");
+
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
   }
 
   if (loading) {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        className={`mt-8 rounded-3xl p-6 border backdrop-blur-xl
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className={`rounded-3xl overflow-hidden border backdrop-blur-xl
         ${
           theme === "dark"
-            ? "bg-white/10 border-white/20"
-            : "bg-white border-slate-300"
+            ? "bg-white/10 border-white/10"
+            : "bg-slate-100 border-slate-200"
         }`}
       >
-        <div className="flex items-center gap-3 mb-5">
-          <Bot className="text-cyan-400" size={28} />
-          <h2 className="text-xl font-bold">AI Weather Assistant</h2>
+        <div className="flex items-center gap-3 px-6 py-5 border-b border-white/10">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-violet-600 flex items-center justify-center">
+            <Bot className="text-white" size={24} />
+          </div>
+
+          <div>
+            <h2 className="font-bold text-xl">
+              AI Weather Assistant
+            </h2>
+
+            <p className="text-sm opacity-70">
+              Thinking...
+            </p>
+          </div>
         </div>
 
-        <div className="space-y-4 animate-pulse">
+        <div className="p-6 space-y-4 animate-pulse">
           <div className="h-4 rounded bg-slate-500/30"></div>
-          <div className="h-4 rounded w-11/12 bg-slate-500/30"></div>
-          <div className="h-4 rounded w-9/12 bg-slate-500/30"></div>
-
-          <div className="h-4 rounded mt-8 bg-slate-500/30"></div>
           <div className="h-4 rounded w-10/12 bg-slate-500/30"></div>
+          <div className="h-4 rounded w-8/12 bg-slate-500/30"></div>
 
           <div className="h-4 rounded mt-8 bg-slate-500/30"></div>
-          <div className="h-4 rounded w-8/12 bg-slate-500/30"></div>
+          <div className="h-4 rounded w-11/12 bg-slate-500/30"></div>
+
+          <div className="h-4 rounded w-9/12 bg-slate-500/30"></div>
         </div>
       </motion.div>
     );
@@ -47,57 +76,107 @@ function AIAssistant({ advice, loading, onRegenerate, theme }) {
     <motion.div
       initial={{
         opacity: 0,
-        y: 40,
+        y: 35,
       }}
       animate={{
         opacity: 1,
         y: 0,
       }}
       transition={{
-        duration: 0.6,
+        duration: .6,
       }}
-      className={`mt-8 rounded-3xl border backdrop-blur-xl overflow-hidden
+      className={`rounded-3xl overflow-hidden border backdrop-blur-xl shadow-xl
       ${
         theme === "dark"
-          ? "bg-white/10 border-white/20"
-          : "bg-white border-slate-300 shadow-xl"
+          ? "bg-white/10 border-white/10"
+          : "bg-slate-100 border-slate-200"
       }`}
     >
-      <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-full bg-cyan-500">
+      {/* Header */}
+
+      <div className="bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 px-6 py-5 flex justify-between items-center">
+
+        <div className="flex items-center gap-4">
+
+          <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+
             <Bot className="text-white" />
+
           </div>
 
           <div>
-            <h2 className="text-xl font-bold">AI Weather Assistant</h2>
 
-            <p className="text-sm opacity-70">Powered by Gemini 3.5 Flash</p>
+            <h2 className="font-bold text-xl text-white">
+              AI Weather Assistant
+            </h2>
+
+            <p className="text-white/80 text-sm">
+              Powered by Gemini AI
+            </p>
+
           </div>
+
         </div>
 
-        <Sparkles className="text-yellow-400" size={28} />
+        <Sparkles
+          className="text-yellow-300"
+          size={28}
+        />
+
       </div>
 
-      <div className="px-6 py-6 whitespace-pre-line leading-8">{advice}</div>
+      {/* Response */}
 
-      <div className="flex gap-3 p-5">
-        <button
-          onClick={copyAdvice}
-          className="flex-1 rounded-xl bg-cyan-500 hover:bg-cyan-600 transition py-3 text-white flex items-center justify-center gap-2"
+      <div className="p-6">
+
+        <div
+          className={`rounded-2xl p-5 leading-8 whitespace-pre-line
+          ${
+            theme === "dark"
+              ? "bg-white/5"
+              : "bg-white"
+          }`}
         >
-          <Copy size={18} />
-          Copy
-        </button>
+          {advice}
+        </div>
 
-        <button
+      </div>
+
+      {/* Buttons */}
+
+      <div className="flex gap-4 px-6 pb-6">
+
+        <motion.button
+          whileTap={{ scale: .95 }}
+          whileHover={{ scale: 1.03 }}
+          onClick={copyAdvice}
+          className="flex-1 bg-cyan-500 hover:bg-cyan-600 transition rounded-xl py-3 text-white font-semibold flex justify-center items-center gap-2"
+        >
+          {copied ? (
+            <>
+              <CheckCircle2 size={18} />
+              Copied
+            </>
+          ) : (
+            <>
+              <Copy size={18} />
+              Copy
+            </>
+          )}
+        </motion.button>
+
+        <motion.button
+          whileTap={{ scale: .95 }}
+          whileHover={{ scale: 1.03 }}
           onClick={onRegenerate}
-          className="flex-1 rounded-xl bg-violet-600 hover:bg-violet-700 transition py-3 text-white flex items-center justify-center gap-2"
+          className="flex-1 bg-violet-600 hover:bg-violet-700 transition rounded-xl py-3 text-white font-semibold flex justify-center items-center gap-2"
         >
           <RefreshCw size={18} />
           Regenerate
-        </button>
+        </motion.button>
+
       </div>
+
     </motion.div>
   );
 }
